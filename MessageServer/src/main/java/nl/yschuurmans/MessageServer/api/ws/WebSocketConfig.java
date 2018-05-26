@@ -11,6 +11,6 @@ import java.util.logging.SocketHandler;
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new ConsumerWebsocket(), "/ws/message");
+        registry.addHandler(new ConsumerWebsocket(), "/ws/subscribe");
     }
 }

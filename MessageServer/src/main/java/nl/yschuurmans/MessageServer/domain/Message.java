@@ -1,15 +1,31 @@
 package nl.yschuurmans.MessageServer.domain;
 
 public class Message {
-    private String topic;
+    private String target;
+    private long messageId;
     private String message;
 
-    public String getTopic() {
-        return topic;
+
+    public Message(String target, long messageId, String message) {
+        this.target = target;
+        this.messageId = messageId;
+        this.message = message;
     }
 
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    public long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(long messageId) {
+        this.messageId = messageId;
     }
 
     public String getMessage() {

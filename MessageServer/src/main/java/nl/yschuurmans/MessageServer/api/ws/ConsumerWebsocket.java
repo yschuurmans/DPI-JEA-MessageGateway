@@ -1,8 +1,5 @@
 package nl.yschuurmans.MessageServer.api.ws;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.yschuurmans.MessageServer.domain.Message;
-import nl.yschuurmans.MessageServer.kafka.sender.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,7 +10,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
 public class ConsumerWebsocket  extends TextWebSocketHandler {

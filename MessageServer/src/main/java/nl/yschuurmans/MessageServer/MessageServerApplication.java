@@ -1,23 +1,30 @@
 package nl.yschuurmans.MessageServer;
 
-import nl.yschuurmans.MessageServer.kafka.sender.Sender;
+import nl.yschuurmans.MessageServer.kafka.sender.KafkaSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+
+import java.awt.*;
 
 @SpringBootApplication
 public class MessageServerApplication {
 
-	private static final Logger LOG = LoggerFactory.getLogger(MessageServerApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MessageServerApplication.class);
 
+    public static boolean toMove = false;
 
-    private static Sender sender;
+    private static KafkaSender kafkaSender;
 
-	public static void main(String[] args) {
-        sender = new Sender();
-	    SpringApplication.run(MessageServerApplication.class, args);
-		LOG.info("Started Application");
-	}
+    public static void main(String[] args) {
+        kafkaSender = new KafkaSender();
+        //SpringApplication.run(MessageServerApplication.class, args);
+
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(MessageServerApplication.class);
+        builder.headless(false).run(args);
+
+        LOG.info("Started Application");
+    }
 } 

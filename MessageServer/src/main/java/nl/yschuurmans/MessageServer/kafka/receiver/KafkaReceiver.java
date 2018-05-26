@@ -13,22 +13,22 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class Receiver {
+public class KafkaReceiver {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Receiver.class);
+    private static final Logger LOG = LoggerFactory.getLogger(KafkaReceiver.class);
 
     @Autowired
     ConsumerWebsocket ws;
 
-    @KafkaListener(topics = "${app.topic.message}")
+    @KafkaListener(topics = "${app.topic.clientmessage}")
     public void listen(@Payload String message) {
 
         try {
             Message msgContent = new ObjectMapper().readValue(message, Message.class);
 
-            LOG.info("received message='{}' in topic='{}'", msgContent.getMessage(), msgContent.getTopic());
+            LOG.info("received message='{}' in topic='{}'", msgContent.getMessage(), msgContent.getTarget());
 
-            ws.SendMessage(msgContent.getTopic(), msgContent.getMessage());
+            ws.SendMessage(msgContent.getTarget(), msgContent.getMessage());
 
         } catch (IOException e) {
             e.printStackTrace();
