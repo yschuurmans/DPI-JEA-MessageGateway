@@ -27,10 +27,7 @@ public class KafkaSender {
     }
 
     public void send(String customTopic, String message) throws JsonProcessingException {
-        Message msg = new Message(message, customTopic);
-        ObjectMapper mapper = new ObjectMapper();
-        String msgJson = mapper.writeValueAsString(msg);
         LOG.info("sending message='{}' to topic='{}'", message, customTopic);
-        kafkaTemplate.send(topic, msgJson);
+        kafkaTemplate.send(topic, message);
     }
 }

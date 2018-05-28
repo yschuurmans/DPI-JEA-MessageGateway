@@ -2,6 +2,7 @@ package nl.yschuurmans.MessageServer.kafka.receiver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.yschuurmans.MessageServer.api.ws.ConsumerWebsocket;
+import nl.yschuurmans.MessageServer.domain.Envelope;
 import nl.yschuurmans.MessageServer.domain.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +22,14 @@ public class KafkaReceiver {
     ConsumerWebsocket ws;
 
     @KafkaListener(topics = "${app.topic.clientmessage}")
-    public void listen(@Payload String message) {
+    public void listen(@Payload String payload) {
 
         try {
-            Message msgContent = new ObjectMapper().readValue(message, Message.class);
+            Envelope envelope = new ObjectMapper().readValue(payload, Envelope.class);
 
-            LOG.info("received message='{}' in topic='{}'", msgContent.getMessage(), msgContent.getTarget());
+            LOG.info("received message='{}' for target='{}'", envelope.getMessage(), envelope.getTarget());
 
-            ws.SendMessage(msgContent.getTarget(), msgContent.getMessage());
+            ws.SendMessage(envelope.getTarget(), payload);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package nl.yschuurmans.MessageServer.api.ws;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -24,22 +25,25 @@ public class ConsumerWebsocket  extends TextWebSocketHandler {
     public void handleTextMessage(WebSocketSession session, TextMessage message)
             throws InterruptedException, IOException {
 
+        LOG.warn("Received '{}'", message);
         SubscribeToTopic(session, message.getPayload());
 
     }
 
-    public void SendMessage(String topic, String message) throws IOException{
-        if(!subscribedTopics.containsKey(topic)){
-            LOG.warn("No subscribers found on topic: '{}', not sending message: '{}'", topic, message);
+    public void SendMessage(String target, String envelope) throws IOException{
+        if(!subscribedTopics.containsKey(target)){
+            LOG.warn("No subscribers found on topic: '{}', not sending message: '{}'", target, envelope);
             return;
         }
-        for(WebSocketSession webSocketSession : subscribedTopics.get(topic)) {
+        for(WebSocketSession webSocketSession : subscribedTopics.get(target)) {
             if(webSocketSession != null && webSocketSession.isOpen() )
-                webSocketSession.sendMessage(new TextMessage(message));
+                LOG.warn("Sending: '{}'  to: '{}'", envelope, target);
+                webSocketSession.sendMessage(new TextMessage(envelope));
         }
     }
 
     public void SubscribeToTopic(WebSocketSession socket, String topic) {
+        LOG.warn("Subscribing '{}'", topic);
         if(!subscribedTopics.containsKey(topic))
             subscribedTopics.put(topic,new ArrayList<>());
 

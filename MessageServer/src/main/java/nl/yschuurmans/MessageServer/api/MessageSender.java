@@ -13,9 +13,9 @@ public class MessageSender {
     @Autowired
     KafkaSender kafkaSender;
 
-    @PostMapping("/send/{topic}")
-    public ResponseEntity sendMessageToKafka(@PathVariable String topic, @RequestBody String body) throws JsonProcessingException {
-         kafkaSender.send(topic, body);
+    @PostMapping("/send")
+    public ResponseEntity sendMessageToKafka(@RequestBody String body) throws JsonProcessingException {
+         kafkaSender.send(body);
         return ResponseEntity.ok().build();
     }
 }
