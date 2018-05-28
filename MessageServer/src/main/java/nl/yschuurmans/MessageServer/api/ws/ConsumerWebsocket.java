@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Component
-public class ConsumerWebsocket  extends TextWebSocketHandler {
+public class ConsumerWebsocket extends TextWebSocketHandler {
     public ConsumerWebsocket() {
     }
 
@@ -30,37 +30,37 @@ public class ConsumerWebsocket  extends TextWebSocketHandler {
 
     }
 
-    public void SendMessage(String target, String envelope) throws IOException{
-        if(!subscribedTopics.containsKey(target)){
+    public void SendMessage(String target, String envelope) throws IOException {
+        if (!subscribedTopics.containsKey(target)) {
             LOG.warn("No subscribers found on topic: '{}', not sending message: '{}'", target, envelope);
             return;
         }
-        for(WebSocketSession webSocketSession : subscribedTopics.get(target)) {
-            if(webSocketSession != null && webSocketSession.isOpen() )
+        for (WebSocketSession webSocketSession : subscribedTopics.get(target)) {
+            if (webSocketSession != null && webSocketSession.isOpen()) {
                 LOG.warn("Sending: '{}'  to: '{}'", envelope, target);
                 webSocketSession.sendMessage(new TextMessage(envelope));
+            }
         }
     }
 
     public void SubscribeToTopic(WebSocketSession socket, String topic) {
         LOG.warn("Subscribing '{}'", topic);
-        if(!subscribedTopics.containsKey(topic))
-            subscribedTopics.put(topic,new ArrayList<>());
+        if (!subscribedTopics.containsKey(topic))
+            subscribedTopics.put(topic, new ArrayList<>());
 
-        if(!subscribedTopics.get(topic).contains(socket))
+        if (!subscribedTopics.get(topic).contains(socket))
             subscribedTopics.get(topic).add(socket);
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        //the messages will be broadcasted to all users.
-        if(!sessions.contains(session))
+        if (!sessions.contains(session))
             sessions.add(session);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        if(sessions.contains(session))
+        if (sessions.contains(session))
             sessions.remove(session);
     }
 
