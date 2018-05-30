@@ -1,0 +1,12 @@
+nl\yschuurmans\MessageGateway\domain\Message.class
+nl\yschuurmans\MessageGateway\api\MessageSender.class
+nl\yschuurmans\MessageGateway\MessageGatewayApplication.class
+nl\yschuurmans\MessageGateway\api\TestApi.class
+nl\yschuurmans\MessageGateway\api\ws\WebSocketConfig.class
+nl\yschuurmans\MessageGateway\util\WebConfig.class
+nl\yschuurmans\MessageGateway\kafka\receiver\KafkaReceiver.class
+nl\yschuurmans\MessageGateway\kafka\sender\KafkaSender.class
+nl\yschuurmans\MessageGateway\domain\Envelope.class
+nl\yschuurmans\MessageGateway\kafka\receiver\ReceiverConfig.class
+nl\yschuurmans\MessageGateway\api\ws\ConsumerWebsocket.class
+nl\yschuurmans\MessageGateway\kafka\sender\SenderConfig.class
